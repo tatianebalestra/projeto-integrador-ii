@@ -1,0 +1,79 @@
+/* src/index.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9; /* Light background color */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height */
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* White background for the form */
+}
+
+.home-container {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* White background for the home page */
+}
+
+.user-info {
+  position: relative;
+}
+
+.sign-out-button {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #d9534f; /* Red for sign out */
+  color: white;
+  cursor: pointer;
+}
+
+.sign-out-button:hover {
+  background-color: #c9302c; /* Darker red on hover */
+}
+
+h1, h2 {
+  margin: 0 0 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 250px; /* Fixed width for the input fields */
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
