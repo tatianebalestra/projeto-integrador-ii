@@ -1,49 +1,93 @@
-// src/Auth.jsx
+
 import React, { useState } from 'react';
 import { supabase } from './supabaseClient';
-import './index.css'; // Import the styles
+import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleAuth = async (event) => {
+   const handleSignUp = async (event) => {
     event.preventDefault();
-    if (isSignUp) {
-      const { user, error } = await supabase.auth.signUp({ email, password });
-      if (error) console.log('Error signing up:', error.message);
-      else console.log('User signed up:', user);
-    } else {
-      const { user, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) console.log('Error signing in:', error.message);
-      else console.log('User signed in:', user);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+      navigate('/home');
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+
+  const handleEmailLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+      navigate('/home');
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
+
+      if (error) throw error;
+      navigate('/home');
+    } catch (error) {
+      setError(error.message);
     }
   };
 
   return (
-    <div className="container">
-      <h2>{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
-      <form onSubmit={handleAuth}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">{isSignUp ? 'Sign Up' : 'Sign In'}</button>
+    <div className="auth-container">
+      <form onSubmit={handleEmailLogin}>
+        <div className="input-container">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="input-container">
+          <input
+            type="password"
+            placeholder="Senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="login-button">Entrar</button>
       </form>
-      <button onClick={() => setIsSignUp(!isSignUp)}>
-        {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+
+      <div className="or-container">
+        <span>Ou entre com sua conta Google</span>
+      </div>
+
+      
+      <button className="google-login-button" onClick={handleGoogleLogin}>
+        Login com conta Google
       </button>
+
+      
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };
