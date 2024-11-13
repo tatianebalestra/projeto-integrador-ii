@@ -27,8 +27,10 @@ const App = () => {
   return (
     <div>
       <h1>Clínica Help</h1>
+      
       <Routes>
         <Route path="/" element={user ? <Navigate to="/home" /> : <Auth />} />
+        // TODO: Passar user como prop para o componente Home
         <Route path="/home" element={user ? <Home /> : <Navigate to="/" />} />
       </Routes>
     </div>
